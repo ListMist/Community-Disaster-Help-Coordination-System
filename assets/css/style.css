@@ -1,3 +1,7 @@
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -9,10 +13,35 @@ body {
 }
 
 header {
-    background: rgba(0, 123, 255, 0.8);
+    background: rgba(0, 102, 204, 0.8);
     color: white;
     padding: 1rem;
     text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logo svg {
+    color: white;
+}
+
+.title h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.title p {
+    margin: 0;
+    font-size: 0.8rem;
+    opacity: 0.8;
 }
 
 nav a {
@@ -78,4 +107,33 @@ footer {
 
 .contact a:hover, .contact span:hover {
     transform: scale(1.1);
+}
+
+.details {
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.9);
+    margin: 2rem;
+    border-radius: 10px;
+}
+
+.detail {
+    margin-bottom: 2rem;
+}
+
+.detail h3 {
+    color: #0066cc;
+}
+
+.learn-more {
+    display: inline-block;
+    margin-top: 1rem;
+    color: #0066cc;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.learn-more:hover {
+    text-decoration: underline;
+    color: #004499;
 }
