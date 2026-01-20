@@ -1,0 +1,81 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    color: #333;
+}
+
+header {
+    background: rgba(0, 123, 255, 0.8);
+    color: white;
+    padding: 1rem;
+    text-align: center;
+}
+
+nav a {
+    color: white;
+    margin: 0 1rem;
+    text-decoration: none;
+    transition: background 0.3s;
+}
+
+nav a:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    padding: 0.5rem;
+}
+
+.hero {
+    padding: 2rem;
+    text-align: center;
+    background: rgba(244, 244, 244, 0.9);
+    border-radius: 10px;
+    margin: 2rem;
+}
+
+.features {
+    display: flex;
+    justify-content: space-around;
+    padding: 2rem;
+}
+
+.feature {
+    flex: 1;
+    margin: 0 1rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: transform 0.3s;
+}
+
+.feature:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+footer {
+    text-align: center;
+    padding: 1.5rem;
+    background: skyblue;
+    color: #333;
+}
+
+.contact {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.contact a, .contact span {
+    margin: 0 0.5rem;
+    color: #333;
+    transition: transform 0.3s;
+}
+
+.contact a:hover, .contact span:hover {
+    transform: scale(1.1);
+}
