@@ -1,29 +1,35 @@
-// Ajax utility functions for CDHCS
 
-// Function to make AJAX requests
-function ajaxRequest(url, method = 'GET', data = null, callback = null) {
-    const xhr = new XMLHttpRequest();
-    xhr.open(method, url, true);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4) {
-            if (xhr.status === 200) {
-                if (callback) {
-                    callback(JSON.parse(xhr.responseText));
-                }
-            } else {
-                console.error('AJAX Error:', xhr.status, xhr.responseText);
-                alert('An error occurred. Please try again.');
+// Function to make AJAX requests using fetch
+async function ajaxRequest(url, method = 'GET', data = null, callback = null) {
+    try {
+        const options = {
+            method: method,
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-Requested-With': 'XMLHttpRequest'
             }
-        }
-    };
+        };
 
-    if (data) {
-        const params = new URLSearchParams(data).toString();
-        xhr.send(params);
-    } else {
-        xhr.send();
+        if (data) {
+            const params = new URLSearchParams(data).toString();
+            options.body = params;
+        }
+
+        const response = await fetch(url, options);
+
+        if (response.ok) {
+            const result = await response.json();
+            if (callback) {
+                callback(result);
+            }
+        } else {
+            console.error('Fetch Error:', response.status, response.statusText);
+            alert('An error occurred. Please try again.');
+        }
+    } catch (error) {
+        console.error('Fetch Error:', error);
+        alert('An error occurred. Please try again.');
     }
 }
 
