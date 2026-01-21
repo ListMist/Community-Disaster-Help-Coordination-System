@@ -24,4 +24,6 @@ CREATE TABLE IF NOT EXISTS help_requests (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (accepted_by) REFERENCES users(id) ON DELETE SET NULL
-);"CREATE VIEW user_view AS SELECT id, username, email, role, created_at FROM users;" 
+);
+
+CREATE VIEW user_view AS SELECT id, username, email, role, created_at FROM users;
