@@ -1,8 +1,8 @@
 <?php
 
-require_once '../lib/Controller.php';
+require_once __DIR__ . '/../lib/Controller.php';
 
-require_once '../models/User.php';
+require_once __DIR__ . '/../models/User.php';
 
 session_start();
 
