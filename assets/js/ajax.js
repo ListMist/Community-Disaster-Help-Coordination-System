@@ -30,7 +30,7 @@ function ajaxRequest(url, method = 'GET', data = null, callback = null) {
 // Accept request for volunteers
 function acceptRequest(requestId) {
     if (confirm('Are you sure you want to accept this request?')) {
-        ajaxRequest('/accept-request/' + requestId, 'POST', null, function(response) {
+        ajaxRequest('/dashboard?action=accept-request&id=' + requestId, 'GET', null, function(response) {
             if (response.success) {
                 alert('Request accepted successfully!');
                 location.reload(); // Reload to update the list
@@ -44,7 +44,7 @@ function acceptRequest(requestId) {
 // Delete user for admins
 function deleteUser(userId) {
     if (confirm('Are you sure you want to delete this user?')) {
-        ajaxRequest('/delete-user/' + userId, 'POST', null, function(response) {
+        ajaxRequest('/dashboard?action=delete-user&id=' + userId, 'GET', null, function(response) {
             if (response.success) {
                 alert('User deleted successfully!');
                 location.reload(); // Reload to update the list
@@ -58,7 +58,7 @@ function deleteUser(userId) {
 // Delete request for admins
 function deleteRequest(requestId) {
     if (confirm('Are you sure you want to delete this request?')) {
-        ajaxRequest('/delete-request/' + requestId, 'POST', null, function(response) {
+        ajaxRequest('/dashboard?action=delete-request&id=' + requestId, 'GET', null, function(response) {
             if (response.success) {
                 alert('Request deleted successfully!');
                 location.reload(); // Reload to update the list
