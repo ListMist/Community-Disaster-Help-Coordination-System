@@ -70,23 +70,53 @@ class AuthController extends Controller {
 
                 $error = 'All fields are required';
 
-                $this->view('auth/register', ['error' => $error]);
+                if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
 
-                return;
+                    echo json_encode(['success' => false, 'error' => $error]);
+
+                    exit;
+
+                } else {
+
+                    $this->view('auth/register', ['error' => $error]);
+
+                    return;
+
+                }
 
             }
 
             if ($this->userModel->register($username, $email, $password, $role)) {
 
-                header('Location: /login');
+                if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
 
-                exit;
+                    echo json_encode(['success' => true]);
+
+                    exit;
+
+                } else {
+
+                    header('Location: /login');
+
+                    exit;
+
+                }
 
             } else {
 
                 $error = 'Registration failed, username or email may already exist';
 
-                $this->view('auth/register', ['error' => $error]);
+                if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
+
+                    echo json_encode(['success' => false, 'error' => $error]);
+
+                    exit;
+
+                } else {
+
+                    $this->view('auth/register', ['error' => $error]);
+
+                }
 
             }
 

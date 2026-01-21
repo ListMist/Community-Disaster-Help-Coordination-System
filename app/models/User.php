@@ -8,9 +8,21 @@ class User extends Model {
 
         $hashed = password_hash($password, PASSWORD_DEFAULT);
 
-        $stmt = $this->db->prepare("INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, ?)");
+        try {
 
-        return $stmt->execute([$username, $email, $hashed, $role]);
+            $stmt = $this->db->prepare("INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, ?)");
+
+            return $stmt->execute([$username, $email, $hashed, $role]);
+
+        } catch (PDOException $e) {
+
+            // Log error or handle
+
+            error_log("Registration failed: " . $e->getMessage());
+
+            return false;
+
+        }
 
     }
 

@@ -2,7 +2,7 @@ CREATE DATABASE IF NOT EXISTS cdhcs_db;
 
 USE cdhcs_db;
 
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) UNIQUE NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
@@ -11,7 +11,7 @@ CREATE TABLE users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE help_requests (
+CREATE TABLE IF NOT EXISTS help_requests (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
     type ENUM('food', 'shelter', 'medical') NOT NULL,

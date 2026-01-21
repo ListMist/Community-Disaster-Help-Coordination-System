@@ -24,7 +24,9 @@ class Database {
 
         } catch (PDOException $e) {
 
-            die("Database connection failed: " . $e->getMessage());
+            error_log("Database connection failed: " . $e->getMessage());
+
+            throw $e; // Re-throw to prevent silent failure
 
         }
 
