@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - CDHCS</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230066cc' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1Z'/></svg>">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        header {
+            background: rgba(0, 102, 204, 0.8);
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .brand {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+        .logo svg {
+            color: white;
+        }
+        .title h1 {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        .title p {
+            margin: 0;
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 120px);
+        }
+        .register-form {
+            max-width: 400px;
+            width: 100%;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+        }
+        .register-form h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #0066cc;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .register-form input, .register-form select {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+            box-sizing: border-box;
+        }
+        .register-form input:focus, .register-form select:focus {
+            outline: none;
+            border-color: #0066cc;
+            box-shadow: 0 0 5px rgba(0, 102, 204, 0.3);
+        }
+        .register-form button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #0066cc, #004499);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 20px;
+        }
+        .register-form button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 102, 204, 0.4);
+        }
+        .register-form button:active {
+            transform: translateY(0);
+        }
+        .error {
+            color: #e74c3c;
+            text-align: center;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        .success {
+            color: #27ae60;
+            text-align: center;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .login-link a {
+            color: #0066cc;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(0, 102, 204, 0.8);
+            color: white;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 300px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="brand">
+            <div class="logo">
+                <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1Z"/>
+                </svg>
+            </div>
+            <div class="title">
+                <h1>CDHCS</h1>
+                <p>Community Disaster Help Coordination System</p>
+            </div>
+        </div>
+        <nav>
+            <a href="index.html">Home</a>
+        </nav>
+    </header>
+    <main>
+        <div class="register-form">
+            <h2>Join CDHCS</h2>
+            <div id="error-message" class="error"></div>
+            <form id="register-form">
+                <input type="text" id="username" placeholder="Username" required>
+                <input type="email" id="email" placeholder="Email" required>
+                <input type="password" id="password" placeholder="Password" required>
+                <select id="role" required>
+                    <option value="">Select Role</option>
+                    <option value="affected">Affected Person</option>
+                    <option value="volunteer">Volunteer</option>
+                    <option value="admin">Administrator</option>
+                </select>
+                <button type="submit">Create Account</button>
+            </form>
+            <div class="login-link">
+                <p>Already have an account? <a href="login.php">Login here</a></p>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2026 CDHCS. All rights reserved.</p>
+    </footer>
+
+    <!-- Success Modal -->
+    <div id="success-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p id="modal-message"></p>
+        </div>
+    </div>
+
+    <script>
+        function showSuccessPopup(message) {
+            document.getElementById('modal-message').textContent = message;
+            document.getElementById('success-modal').style.display = 'block';
+        }
+
+        document.getElementById('register-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const role = document.getElementById('role').value;
+
+            document.getElementById('error-message').textContent = '';
+
+            if (!username || !email || !password || !role) {
+                document.getElementById('error-message').textContent = 'All fields are required';
+                return;
+            }
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                document.getElementById('error-message').textContent = 'Invalid email format';
+                return;
+            }
+
+            if (password.length < 6) {
+                document.getElementById('error-message').textContent = 'Password must be at least 6 characters';
+                return;
+            }
+
+            // Demo registration
+            showSuccessPopup('Registration successful!');
+        });
+
+        // Close modal
+        document.querySelector('.close').addEventListener('click', function() {
+            document.getElementById('success-modal').style.display = 'none';
+        });
+
+        window.addEventListener('click', function(event) {
+            if (event.target == document.getElementById('success-modal')) {
+                document.getElementById('success-modal').style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
