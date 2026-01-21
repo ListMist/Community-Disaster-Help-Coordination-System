@@ -162,9 +162,9 @@
         <div class="login-form">
             <h2>Login to CDHCS</h2>
             <div id="error-message" class="error"></div>
-            <form id="login-form">
-                <input type="email" id="email" placeholder="Email" required>
-                <input type="password" id="password" placeholder="Password" required>
+            <form action="login.php" method="post">
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="password" name="password" placeholder="Password" required>
                 <button type="submit">Login</button>
             </form>
             <div class="register-link">
@@ -174,36 +174,8 @@
         </div>
     </main>
     <footer>
-        <p>&copy; 2023 CDHCS. All rights reserved.</p>
+        <p>&copy; 2026 CDHCS. All rights reserved.</p>
     </footer>
 
-    <script>
-        document.getElementById('login-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-
-            document.getElementById('error-message').textContent = '';
-
-            if (!email || !password) {
-                document.getElementById('error-message').textContent = 'Email and password are required';
-                return;
-            }
-
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                document.getElementById('error-message').textContent = 'Invalid email format';
-                return;
-            }
-
-            // Demo login
-            if (email === 'demo@cdhcs.com' && password === 'demo123') {
-                document.getElementById('error-message').className = 'success';
-                document.getElementById('error-message').textContent = 'Login successful! (Demo)';
-            } else {
-                document.getElementById('error-message').textContent = 'Invalid email or password';
-            }
-        });
-    </script>
 </body>
 </html>
