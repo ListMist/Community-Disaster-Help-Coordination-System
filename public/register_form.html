@@ -212,10 +212,11 @@
             <h2>Join CDHCS</h2>
             <div id="error-message" class="error"></div>
             <form id="register-form">
-                <input type="text" id="username" placeholder="Username" required>
-                <input type="email" id="email" placeholder="Email" required>
-                <input type="password" id="password" placeholder="Password" required>
-                <select id="role" required>
+                <input type="hidden" name="ajax" value="1">
+                <input type="text" id="username" name="username" placeholder="Username" required>
+                <input type="email" id="email" name="email" placeholder="Email" required>
+                <input type="password" id="password" name="password" placeholder="Password" required>
+                <select id="role" name="role" required>
                     <option value="">Select Role</option>
                     <option value="affected">Affected Person</option>
                     <option value="volunteer">Volunteer</option>
@@ -287,6 +288,7 @@
                 }
             })
             .then(response => response.json())
+            .then(response => response.json())
             .then(data => {
                 if (data.success) {
                     showSuccessPopup('Registration successful!');
@@ -295,6 +297,7 @@
                 }
             })
             .catch(error => {
+                console.error('Fetch error:', error);
                 document.getElementById('error-message').textContent = 'An error occurred. Please try again.';
             });
         });

@@ -70,7 +70,7 @@ class AuthController extends Controller {
 
                 $error = 'All fields are required';
 
-                if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
+                if (isset($_POST['ajax']) && $_POST['ajax'] == '1') {
 
                     echo json_encode(['success' => false, 'error' => $error]);
 
@@ -88,7 +88,7 @@ class AuthController extends Controller {
 
             if ($this->userModel->register($username, $email, $password, $role)) {
 
-                if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
+                if (isset($_POST['ajax']) && $_POST['ajax'] == '1') {
 
                     echo json_encode(['success' => true]);
 
@@ -106,7 +106,7 @@ class AuthController extends Controller {
 
                 $error = 'Registration failed, username or email may already exist';
 
-                if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
+                if (isset($_POST['ajax']) && $_POST['ajax'] == '1') {
 
                     echo json_encode(['success' => false, 'error' => $error]);
 
