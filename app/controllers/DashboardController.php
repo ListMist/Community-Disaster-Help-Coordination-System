@@ -100,7 +100,115 @@ class DashboardController extends Controller {
 
     }
 
-    public function acceptRequest($id) {
+    public function acceptRequest() {
+
+        if (!isset($_SESSION['user']) || $_SESSION['user']['role'] != 'volunteer') {
+
+            header('Location: /login');
+
+            exit;
+
+        }
+
+        $requestId = $_GET['id'];
+
+        $volunteerId = $_SESSION['user']['id'];
+
+        if ($this->requestModel->acceptRequest($requestId, $volunteerId)) {
+
+            header('Location: /dashboard');
+
+            exit;
+
+        } else {
+
+            header('Location: /dashboard');
+
+        }
+
+    }
+
+    public function updateStatus() {
+
+        if (!isset($_SESSION['user']) || $_SESSION['user']['role'] != 'volunteer') {
+
+            header('Location: /login');
+
+            exit;
+
+        }
+
+        $requestId = $_POST['request_id'];
+
+        $status = $_POST['status'];
+
+        if ($this->requestModel->updateStatus($requestId, $status)) {
+
+            header('Location: /dashboard');
+
+            exit;
+
+        } else {
+
+            header('Location: /dashboard');
+
+        }
+
+    }
+
+    public function deleteUser() {
+
+        if (!isset($_SESSION['user']) || $_SESSION['user']['role'] != 'admin') {
+
+            header('Location: /login');
+
+            exit;
+
+        }
+
+        $userId = $_GET['id'];
+
+        if ($this->userModel->deleteUser($userId)) {
+
+            header('Location: /dashboard');
+
+            exit;
+
+        } else {
+
+            header('Location: /dashboard');
+
+        }
+
+    }
+
+    public function deleteRequest() {
+
+        if (!isset($_SESSION['user']) || $_SESSION['user']['role'] != 'admin') {
+
+            header('Location: /login');
+
+            exit;
+
+        }
+
+        $requestId = $_GET['id'];
+
+        if ($this->requestModel->deleteRequest($requestId)) {
+
+            header('Location: /dashboard');
+
+            exit;
+
+        } else {
+
+            header('Location: /dashboard');
+
+        }
+
+    }
+
+    public function acceptRequestById($id) {
 
         if (!isset($_SESSION['user']) || $_SESSION['user']['role'] != 'volunteer') {
 
@@ -120,7 +228,7 @@ class DashboardController extends Controller {
 
     }
 
-    public function deleteRequest($id) {
+    public function deleteRequestById($id) {
 
         if (!isset($_SESSION['user']) || $_SESSION['user']['role'] != 'admin') {
 
@@ -138,7 +246,7 @@ class DashboardController extends Controller {
 
     }
 
-    public function deleteUser($id) {
+    public function deleteUserById($id) {
 
         if (!isset($_SESSION['user']) || $_SESSION['user']['role'] != 'admin') {
 

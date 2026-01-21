@@ -104,6 +104,12 @@ class User extends Model {
 
     public function resetPassword($email) {
 
+        if (!$this->db) {
+
+            return false;
+
+        }
+
         $stmt = $this->db->prepare("SELECT id FROM users WHERE email = ?");
 
         $stmt->execute([$email]);
