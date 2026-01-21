@@ -34,7 +34,23 @@ class AuthController extends Controller {
 
                 $_SESSION['user'] = $user;
 
-                header('Location: /dashboard');
+                if ($user['role'] == 'affected') {
+
+                    header('Location: /affected_dashboard.html');
+
+                } elseif ($user['role'] == 'volunteer') {
+
+                    header('Location: /volunteer_dashboard.html');
+
+                } elseif ($user['role'] == 'admin') {
+
+                    header('Location: /admin_dashboard.html');
+
+                } else {
+
+                    header('Location: /dashboard');
+
+                }
 
                 exit;
 
