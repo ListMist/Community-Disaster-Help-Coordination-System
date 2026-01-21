@@ -118,7 +118,7 @@ class AuthController extends Controller {
 
                 } else {
 
-                    header('Location: /login');
+                    $this->view('../views/register_form', ['success' => 'Registration successful! Please login.']);
 
                     exit;
 
