@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Affected Dashboard - CDHCS</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230066cc' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1Z'/></svg>">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        header {
+            background: rgba(0, 102, 204, 0.8);
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .logo svg {
+            color: white;
+        }
+        .title h1 {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        .title p {
+            margin: 0;
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        main {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .dashboard {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+        }
+        .dashboard h1 {
+            text-align: center;
+            color: #0066cc;
+            margin-bottom: 30px;
+        }
+        .section {
+            margin-bottom: 40px;
+        }
+        .section h2 {
+            color: #0066cc;
+            border-bottom: 2px solid #0066cc;
+            padding-bottom: 10px;
+        }
+        .request-list {
+            list-style: none;
+            padding: 0;
+        }
+        .request-item {
+            background: #f9f9f9;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 5px solid #0066cc;
+        }
+        .request-item strong {
+            color: #333;
+        }
+        .status {
+            font-weight: bold;
+        }
+        .status.pending { color: #f39c12; }
+        .status.accepted { color: #27ae60; }
+        .status.resolved { color: #3498db; }
+        form {
+            background: #f0f8ff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        form h3 {
+            margin-top: 0;
+            color: #0066cc;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+        }
+        input, select, textarea, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        button {
+            background: linear-gradient(135deg, #0066cc, #004499);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+        button:hover {
+            transform: translateY(-2px);
+        }
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(0, 102, 204, 0.8);
+            color: white;
+            margin-top: 20px;
+            border-radius: 20px 20px 0 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="brand">
+            <div class="logo">
+                <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1Z"/>
+                </svg>
+            </div>
+            <div class="title">
+                <h1>CDHCS</h1>
+                <p>Community Disaster Help Coordination System</p>
+            </div>
+        </div>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="login_form.html">Login</a>
+        </nav>
+    </header>
+    <main>
+        <div class="dashboard">
+            <h1>Welcome, Affected Person</h1>
+
+            <div class="section">
+                <h2>Your Help Requests</h2>
+                <ul class="request-list">
+                    <li class="request-item">
+                        <strong>Type:</strong> Food<br>
+                        <strong>Description:</strong> Need food supplies for family of 4<br>
+                        <strong>Urgency:</strong> High<br>
+                        <strong>Location:</strong> Downtown Area<br>
+                        <strong>Status:</strong> <span class="status pending">Pending</span>
+                    </li>
+                    <li class="request-item">
+                        <strong>Type:</strong> Shelter<br>
+                        <strong>Description:</strong> Temporary housing needed<br>
+                        <strong>Urgency:</strong> Medium<br>
+                        <strong>Location:</strong> Riverside<br>
+                        <strong>Status:</strong> <span class="status accepted">Accepted</span>
+                    </li>
+                    <li class="request-item">
+                        <strong>Type:</strong> Medical<br>
+                        <strong>Description:</strong> First aid supplies<br>
+                        <strong>Urgency:</strong> Low<br>
+                        <strong>Location:</strong> City Center<br>
+                        <strong>Status:</strong> <span class="status resolved">Resolved</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>Submit New Help Request</h2>
+                <form id="request-form">
+                    <label for="type">Type of Help:</label>
+                    <select id="type" name="type" required>
+                        <option value="">Select Type</option>
+                        <option value="food">Food</option>
+                        <option value="shelter">Shelter</option>
+                        <option value="medical">Medical</option>
+                    </select>
+
+                    <label for="description">Description:</label>
+                    <textarea id="description" name="description" rows="4" placeholder="Describe your needs in detail" required></textarea>
+
+                    <label for="urgency">Urgency Level:</label>
+                    <select id="urgency" name="urgency" required>
+                        <option value="">Select Urgency</option>
+                        <option value="low">Low</option>
+                        <option value="medium">Medium</option>
+                        <option value="high">High</option>
+                    </select>
+
+                    <label for="location">Location:</label>
+                    <input type="text" id="location" name="location" placeholder="Your current location" required>
+
+                    <button type="submit">Submit Request</button>
+                </form>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2026 CDHCS. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.getElementById('request-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Request submitted successfully! (Demo - not saved to database)');
+            // Reset form
+            this.reset();
+        });
+    </script>
+</body>
+</html>
