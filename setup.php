@@ -28,6 +28,10 @@ if (mysqli_query($conn, $sql)) {
 
     $schema = str_replace("CREATE DATABASE IF NOT EXISTS cdhcs_db;\n\nUSE cdhcs_db;\n\n", '', $schema);
 
+    // Drop existing tables if they exist
+    mysqli_query($conn, "DROP TABLE IF EXISTS help_requests");
+    mysqli_query($conn, "DROP TABLE IF EXISTS users");
+
     if (mysqli_multi_query($conn, $schema)) {
 
         echo "Database and tables created successfully.";
