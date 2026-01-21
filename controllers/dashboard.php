@@ -1,5 +1,6 @@
 <?php
-require_once '../app/controllers/DashboardController.php';
+session_start();
+require_once 'DashboardController.php';
 
 $controller = new DashboardController();
 

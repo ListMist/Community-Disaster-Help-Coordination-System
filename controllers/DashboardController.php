@@ -128,13 +128,15 @@ class DashboardController extends Controller {
 
             if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
 
+                header('Content-Type: application/json');
+
                 echo json_encode(['success' => true]);
 
                 exit;
 
             } else {
 
-                header('Location: /dashboard');
+                header('Location: /views/index.html');
 
                 exit;
 
@@ -144,13 +146,15 @@ class DashboardController extends Controller {
 
             if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
 
+                header('Content-Type: application/json');
+
                 echo json_encode(['success' => false, 'message' => 'Failed to accept request']);
 
                 exit;
 
             } else {
 
-                header('Location: /dashboard');
+                header('Location: /views/index.html');
 
             }
 
@@ -212,13 +216,15 @@ class DashboardController extends Controller {
 
             if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
 
+                header('Content-Type: application/json');
+
                 echo json_encode(['success' => true]);
 
                 exit;
 
             } else {
 
-                header('Location: /dashboard');
+                header('Location: /views/index.html');
 
                 exit;
 
@@ -228,13 +234,15 @@ class DashboardController extends Controller {
 
             if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
 
+                header('Content-Type: application/json');
+
                 echo json_encode(['success' => false, 'message' => 'Failed to delete user']);
 
                 exit;
 
             } else {
 
-                header('Location: /dashboard');
+                header('Location: /views/index.html');
 
             }
 
@@ -268,13 +276,15 @@ class DashboardController extends Controller {
 
             if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
 
+                header('Content-Type: application/json');
+
                 echo json_encode(['success' => true]);
 
                 exit;
 
             } else {
 
-                header('Location: /dashboard');
+                header('Location: /views/index.html');
 
                 exit;
 
@@ -284,13 +294,15 @@ class DashboardController extends Controller {
 
             if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
 
+                header('Content-Type: application/json');
+
                 echo json_encode(['success' => false, 'message' => 'Failed to delete request']);
 
                 exit;
 
             } else {
 
-                header('Location: /dashboard');
+                header('Location: /views/index.html');
 
             }
 
