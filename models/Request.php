@@ -1,6 +1,6 @@
 <?php
 
-require_once '../lib/Model.php';
+require_once '../controllers/Model.php';
 
 class RequestModel extends Model {
 
@@ -101,5 +101,4 @@ class RequestModel extends Model {
     }
 
 }
-
 ?>

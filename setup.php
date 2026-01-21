@@ -22,7 +22,7 @@ if (mysqli_query($conn, $sql)) {
 
     mysqli_select_db($conn, $dbname);
 
-    $schema = file_get_contents('app/config/schema.sql');
+    $schema = file_get_contents('config/schema.sql');
 
     // Remove the CREATE DATABASE and USE lines
 

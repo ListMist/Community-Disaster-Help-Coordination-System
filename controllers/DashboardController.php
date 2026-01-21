@@ -1,6 +1,6 @@
 <?php
 
-require_once '../lib/Controller.php';
+require_once 'Controller.php';
 
 require_once '../models/User.php';
 
