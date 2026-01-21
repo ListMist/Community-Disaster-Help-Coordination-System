@@ -6,59 +6,97 @@ class RequestModel extends Model {
 
     public function createRequest($userId, $type, $description, $urgency, $location) {
 
-        $stmt = $this->db->prepare("INSERT INTO help_requests (user_id, type, description, urgency, location) VALUES (?, ?, ?, ?, ?)");
+        $sql = "INSERT INTO help_requests (user_id, type, description, urgency, location) VALUES (?, ?, ?, ?, ?)";
 
-        return $stmt->execute([$userId, $type, $description, $urgency, $location]);
+        $stmt = mysqli_prepare($this->conn, $sql);
+
+        mysqli_stmt_bind_param($stmt, "issss", $userId, $type, $description, $urgency, $location);
+
+        return mysqli_stmt_execute($stmt);
 
     }
 
     public function getRequestsByUser($userId) {
 
-        $stmt = $this->db->prepare("SELECT * FROM help_requests WHERE user_id = ?");
+        $sql = "SELECT * FROM help_requests WHERE user_id = ?";
 
-        $stmt->execute([$userId]);
+        $stmt = mysqli_prepare($this->conn, $sql);
 
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        mysqli_stmt_bind_param($stmt, "i", $userId);
+
+        mysqli_stmt_execute($stmt);
+
+        $result = mysqli_stmt_get_result($stmt);
+
+        $rows = [];
+
+        while($r = mysqli_fetch_assoc($result)) $rows[] = $r;
+
+        return $rows;
 
     }
 
     public function getAllRequests() {
 
-        $stmt = $this->db->query("SELECT hr.*, u.username FROM help_requests hr JOIN users u ON hr.user_id = u.id");
+        $sql = "SELECT hr.*, u.username FROM help_requests hr JOIN users u ON hr.user_id = u.id";
 
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $result = mysqli_query($this->conn, $sql);
+
+        $rows = [];
+
+        while($r = mysqli_fetch_assoc($result)) $rows[] = $r;
+
+        return $rows;
 
     }
 
     public function getActiveRequests() {
 
-        $stmt = $this->db->query("SELECT hr.*, u.username FROM help_requests hr JOIN users u ON hr.user_id = u.id WHERE status = 'pending'");
+        $sql = "SELECT hr.*, u.username FROM help_requests hr JOIN users u ON hr.user_id = u.id WHERE status = 'pending'";
 
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $result = mysqli_query($this->conn, $sql);
+
+        $rows = [];
+
+        while($r = mysqli_fetch_assoc($result)) $rows[] = $r;
+
+        return $rows;
 
     }
 
     public function acceptRequest($requestId, $volunteerId) {
 
-        $stmt = $this->db->prepare("UPDATE help_requests SET status = 'accepted', accepted_by = ? WHERE id = ? AND status = 'pending'");
+        $sql = "UPDATE help_requests SET status = 'accepted', accepted_by = ? WHERE id = ? AND status = 'pending'";
 
-        return $stmt->execute([$volunteerId, $requestId]);
+        $stmt = mysqli_prepare($this->conn, $sql);
+
+        mysqli_stmt_bind_param($stmt, "ii", $volunteerId, $requestId);
+
+        return mysqli_stmt_execute($stmt);
 
     }
 
     public function updateStatus($requestId, $status) {
 
-        $stmt = $this->db->prepare("UPDATE help_requests SET status = ? WHERE id = ?");
+        $sql = "UPDATE help_requests SET status = ? WHERE id = ?";
 
-        return $stmt->execute([$status, $requestId]);
+        $stmt = mysqli_prepare($this->conn, $sql);
+
+        mysqli_stmt_bind_param($stmt, "si", $status, $requestId);
+
+        return mysqli_stmt_execute($stmt);
 
     }
 
     public function deleteRequest($requestId) {
 
-        $stmt = $this->db->prepare("DELETE FROM help_requests WHERE id = ?");
+        $sql = "DELETE FROM help_requests WHERE id = ?";
 
-        return $stmt->execute([$requestId]);
+        $stmt = mysqli_prepare($this->conn, $sql);
+
+        mysqli_stmt_bind_param($stmt, "i", $requestId);
+
+        return mysqli_stmt_execute($stmt);
 
     }
 

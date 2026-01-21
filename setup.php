@@ -8,28 +8,42 @@ $password = '';
 
 $dbname = 'cdhcs_db';
 
-try {
+$conn = mysqli_connect($host, $username, $password);
 
-    $pdo = new PDO("mysql:host=$host", $username, $password);
+if (!$conn) {
 
-    $pdo->exec("CREATE DATABASE IF NOT EXISTS $dbname");
+    die("Connection failed: " . mysqli_connect_error());
 
-    $pdo->exec("USE $dbname");
+}
 
-    $sql = file_get_contents('config/schema.sql');
+$sql = "CREATE DATABASE IF NOT EXISTS $dbname";
+
+if (mysqli_query($conn, $sql)) {
+
+    mysqli_select_db($conn, $dbname);
+
+    $schema = file_get_contents('app/config/schema.sql');
 
     // Remove the CREATE DATABASE and USE lines
 
-    $sql = str_replace("CREATE DATABASE IF NOT EXISTS cdhcs_db;\n\nUSE cdhcs_db;\n\n", '', $sql);
+    $schema = str_replace("CREATE DATABASE IF NOT EXISTS cdhcs_db;\n\nUSE cdhcs_db;\n\n", '', $schema);
 
-    $pdo->exec($sql);
+    if (mysqli_multi_query($conn, $schema)) {
 
-    echo "Database and tables created successfully.";
+        echo "Database and tables created successfully.";
 
-} catch (PDOException $e) {
+    } else {
 
-    echo "Error: " . $e->getMessage();
+        echo "Error creating tables: " . mysqli_error($conn);
+
+    }
+
+} else {
+
+    echo "Error creating database: " . mysqli_error($conn);
 
 }
+
+mysqli_close($conn);
 
 ?>

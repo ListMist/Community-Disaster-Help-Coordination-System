@@ -4,7 +4,7 @@ class Database {
 
     private static $instance = null;
 
-    private $pdo;
+    private $conn;
 
     private function __construct() {
 
@@ -16,15 +16,11 @@ class Database {
 
         $password = '';
 
-        try {
+        $this->conn = mysqli_connect($host, $username, $password, $dbname);
 
-            $this->pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+        if (!$this->conn) {
 
-            $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-        } catch (PDOException $e) {
-
-            die("Database Error: " . $e->getMessage());
+            die("Database Error: " . mysqli_connect_error());
 
         }
 
@@ -44,7 +40,7 @@ class Database {
 
     public function getConnection() {
 
-        return $this->pdo;
+        return $this->conn;
 
     }
 

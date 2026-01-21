@@ -6,39 +6,49 @@ class User extends Model {
 
     public function register($username, $email, $password, $role) {
 
-        if (!$this->db) {
+        // Check if email already exists
 
-            return false;
+        $sqlCheck = "SELECT * FROM users WHERE email=?";
+
+        $stmtCheck = mysqli_prepare($this->conn, $sqlCheck);
+
+        mysqli_stmt_bind_param($stmtCheck, "s", $email);
+
+        mysqli_stmt_execute($stmtCheck);
+
+        $resultCheck = mysqli_stmt_get_result($stmtCheck);
+
+        if (mysqli_num_rows($resultCheck) > 0) {
+
+            return "email_exists";
 
         }
 
         $hashed = password_hash($password, PASSWORD_DEFAULT);
 
-        try {
+        $sql = "INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, ?)";
 
-            $stmt = $this->db->prepare("INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, ?)");
+        $stmt = mysqli_prepare($this->conn, $sql);
 
-            return $stmt->execute([$username, $email, $hashed, $role]);
+        mysqli_stmt_bind_param($stmt, "ssss", $username, $email, $hashed, $role);
 
-        } catch (PDOException $e) {
-
-            // Log error or handle
-
-            error_log("Registration failed: " . $e->getMessage());
-
-            return false;
-
-        }
+        return mysqli_stmt_execute($stmt);
 
     }
 
     public function login($email, $password) {
 
-        $stmt = $this->db->prepare("SELECT * FROM users WHERE email = ?");
+        $sql = "SELECT * FROM users WHERE email = ?";
 
-        $stmt->execute([$email]);
+        $stmt = mysqli_prepare($this->conn, $sql);
 
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        mysqli_stmt_bind_param($stmt, "s", $email);
+
+        mysqli_stmt_execute($stmt);
+
+        $result = mysqli_stmt_get_result($stmt);
+
+        $user = mysqli_fetch_assoc($result);
 
         if ($user && password_verify($password, $user['password'])) {
 
@@ -52,11 +62,17 @@ class User extends Model {
 
     public function getUserById($id) {
 
-        $stmt = $this->db->prepare("SELECT * FROM users WHERE id = ?");
+        $sql = "SELECT * FROM users WHERE id = ?";
 
-        $stmt->execute([$id]);
+        $stmt = mysqli_prepare($this->conn, $sql);
 
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        mysqli_stmt_bind_param($stmt, "i", $id);
+
+        mysqli_stmt_execute($stmt);
+
+        $result = mysqli_stmt_get_result($stmt);
+
+        return mysqli_fetch_assoc($result);
 
     }
 
@@ -68,11 +84,15 @@ class User extends Model {
 
         $values = [];
 
+        $types = "";
+
         if (isset($data['email'])) {
 
             $fields[] = 'email = ?';
 
             $values[] = $data['email'];
+
+            $types .= "s";
 
         }
 
@@ -82,13 +102,21 @@ class User extends Model {
 
             $values[] = $data['username'];
 
+            $types .= "s";
+
         }
 
         $values[] = $id;
 
-        $stmt = $this->db->prepare("UPDATE users SET " . implode(', ', $fields) . " WHERE id = ?");
+        $types .= "i";
 
-        return $stmt->execute($values);
+        $sql = "UPDATE users SET " . implode(', ', $fields) . " WHERE id = ?";
+
+        $stmt = mysqli_prepare($this->conn, $sql);
+
+        mysqli_stmt_bind_param($stmt, $types, ...$values);
+
+        return mysqli_stmt_execute($stmt);
 
     }
 
@@ -96,33 +124,39 @@ class User extends Model {
 
         $hashed = password_hash($newPassword, PASSWORD_DEFAULT);
 
-        $stmt = $this->db->prepare("UPDATE users SET password = ? WHERE id = ?");
+        $sql = "UPDATE users SET password = ? WHERE id = ?";
 
-        return $stmt->execute([$hashed, $id]);
+        $stmt = mysqli_prepare($this->conn, $sql);
+
+        mysqli_stmt_bind_param($stmt, "si", $hashed, $id);
+
+        return mysqli_stmt_execute($stmt);
 
     }
 
     public function resetPassword($email) {
 
-        if (!$this->db) {
+        $sql = "SELECT id FROM users WHERE email = ?";
 
-            return false;
+        $stmt = mysqli_prepare($this->conn, $sql);
 
-        }
+        mysqli_stmt_bind_param($stmt, "s", $email);
 
-        $stmt = $this->db->prepare("SELECT id FROM users WHERE email = ?");
+        mysqli_stmt_execute($stmt);
 
-        $stmt->execute([$email]);
+        $result = mysqli_stmt_get_result($stmt);
 
-        if ($stmt->fetch()) {
+        if (mysqli_fetch_assoc($result)) {
 
             $newPassword = password_hash('reset123', PASSWORD_DEFAULT);
 
-            $stmt = $this->db->prepare("UPDATE users SET password = ? WHERE email = ?");
+            $sql = "UPDATE users SET password = ? WHERE email = ?";
 
-            $stmt->execute([$newPassword, $email]);
+            $stmt = mysqli_prepare($this->conn, $sql);
 
-            return true;
+            mysqli_stmt_bind_param($stmt, "ss", $newPassword, $email);
+
+            return mysqli_stmt_execute($stmt);
 
         }
 
@@ -132,17 +166,27 @@ class User extends Model {
 
     public function getAllUsers() {
 
-        $stmt = $this->db->query("SELECT * FROM users");
+        $sql = "SELECT * FROM users ORDER BY created_at DESC";
 
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $result = mysqli_query($this->conn, $sql);
+
+        $rows = [];
+
+        while($r = mysqli_fetch_assoc($result)) $rows[] = $r;
+
+        return $rows;
 
     }
 
     public function deleteUser($id) {
 
-        $stmt = $this->db->prepare("DELETE FROM users WHERE id = ?");
+        $sql = "DELETE FROM users WHERE id = ?";
 
-        return $stmt->execute([$id]);
+        $stmt = mysqli_prepare($this->conn, $sql);
+
+        mysqli_stmt_bind_param($stmt, "i", $id);
+
+        return mysqli_stmt_execute($stmt);
 
     }
 
