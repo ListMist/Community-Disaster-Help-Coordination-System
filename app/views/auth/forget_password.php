@@ -155,8 +155,8 @@
         <div class="forget-form">
             <h2>Reset Password</h2>
             <?php if (isset($message)) echo "<div class='message'>$message</div>"; ?>
-            <form method="post">
-                <input type="email" name="email" placeholder="Enter your email" required>
+            <form method="post" id="forget-password-form">
+                <input type="email" name="email" id="email" placeholder="Enter your email" required>
                 <button type="submit">Reset Password</button>
             </form>
             <div class="back-link">
@@ -167,5 +167,6 @@
     <footer>
         <p>&copy; 2023 CDHCS. All rights reserved.</p>
     </footer>
+    <script src="../../assets/js/ajax.js"></script>
 </body>
 </html>
