@@ -6,6 +6,12 @@ class User extends Model {
 
     public function register($username, $email, $password, $role) {
 
+        if (!$this->db) {
+
+            return false;
+
+        }
+
         $hashed = password_hash($password, PASSWORD_DEFAULT);
 
         try {

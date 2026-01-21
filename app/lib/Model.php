@@ -1,6 +1,6 @@
 <?php
 
-require_once 'config/database.php';
+require_once '../../config/database.php';
 
 class Model {
 
@@ -8,7 +8,17 @@ class Model {
 
     public function __construct() {
 
-        $this->db = Database::getInstance()->getConnection();
+        try {
+
+            $this->db = Database::getInstance()->getConnection();
+
+        } catch (Exception $e) {
+
+            $this->db = null;
+
+            error_log("Database connection failed in Model: " . $e->getMessage());
+
+        }
 
     }
 
