@@ -165,6 +165,10 @@
             <form action="login.php" method="post">
                 <input type="email" name="email" placeholder="Email" required>
                 <input type="password" name="password" placeholder="Password" required>
+                <label style="display: flex; align-items: center; margin: 10px 0;">
+                    <input type="checkbox" name="remember" style="margin-right: 10px;">
+                    Remember Me
+                </label>
                 <button type="submit">Login</button>
             </form>
             <div class="register-link">
@@ -176,6 +180,29 @@
     <footer>
         <p>&copy; 2026 CDHCS. All rights reserved.</p>
     </footer>
+    <script>
+        // Check for remember cookie and prefill email
+        function getCookie(name) {
+            const cname = name + "=";
+            const decodedCookie = decodeURIComponent(document.cookie);
+            const ca = decodedCookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(cname) == 0) {
+                    return c.substring(cname.length, c.length);
+                }
+            }
+            return "";
+        }
 
+        const rememberedEmail = getCookie("remember_user");
+        if (rememberedEmail) {
+            document.querySelector('input[name="email"]').value = rememberedEmail;
+            document.querySelector('input[name="remember"]').checked = true;
+        }
+    </script>
 </body>
 </html>

@@ -34,6 +34,12 @@ class AuthController extends Controller {
 
                 $_SESSION['user'] = $user;
 
+                if (isset($_POST['remember'])) {
+
+                    setcookie('remember_user', $user['email'], time() + (30 * 24 * 60 * 60), "/"); // 30 days
+
+                }
+
                 if ($user['role'] == 'affected') {
 
                     header('Location: /affected_dashboard.html');
